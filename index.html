@@ -5,68 +5,125 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Prolog автомобили с различни правила и GIF</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 700px;
-      margin: 30px auto;
-      background: #f9f9f9;
-      color: #333;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      color: #222;
+      padding: 25px 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      user-select: none;
+    }
+    h1 {
       text-align: center;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1rem;
+      letter-spacing: 1.2px;
+      text-shadow: 0 1px 3px rgba(255 255 255 / 0.8);
     }
     textarea {
-      width: 90%;
-      max-width: 600px;
-      height: 140px;
-      font-family: monospace;
+      width: 100%;
+      min-height: 140px;
+      font-family: 'Courier New', Courier, monospace;
       font-size: 16px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: 2px solid #007acc;
-      padding: 8px;
+      padding: 15px 20px;
+      border-radius: 12px;
+      border: 2px solid #4a90e2;
+      box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
       resize: vertical;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fefefe;
+      color: #222;
+      outline: none;
+    }
+    textarea:focus {
+      border-color: #357abd;
+      box-shadow: 0 6px 20px rgba(53, 122, 189, 0.6);
     }
     button {
-      margin-top: 15px;
-      padding: 10px 25px;
-      font-size: 18px;
-      background-color: #007acc;
+      display: block;
+      margin: 25px auto 0;
+      padding: 14px 36px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(45deg, #4a90e2, #357abd);
       border: none;
-      color: white;
-      border-radius: 8px;
+      border-radius: 14px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      box-shadow: 0 5px 15px rgba(53, 122, 189, 0.6);
+      transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+      user-select: none;
     }
     button:hover {
-      background-color: #005f99;
+      background: linear-gradient(45deg, #357abd, #285a8d);
+      box-shadow: 0 8px 25px rgba(40, 90, 141, 0.8);
+      transform: scale(1.05);
+    }
+    button:active {
+      transform: scale(0.98);
+      box-shadow: 0 4px 12px rgba(40, 90, 141, 0.5);
     }
     #result {
-      margin-top: 20px;
+      margin-top: 30px;
       font-size: 18px;
-      min-height: 30px;
-      font-weight: bold;
-      color: #004a99;
+      min-height: 40px;
+      font-weight: 600;
+      color: #1a3c6e;
+      line-height: 1.5;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 0.8s forwards;
+      user-select: text;
     }
     .animal-container {
-      margin-top: 30px;
-      min-height: 160px;
+      margin-top: 40px;
+      min-height: 180px;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #d0e8ff;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #a0c4ff;
+      background: #ffffffcc;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(74, 144, 226, 0.25);
+      transition: background-color 0.5s ease;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
     }
     .animal-gif {
-      max-width: 180px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #005f99;
+      max-width: 200px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(53, 122, 189, 0.5);
+      transform: scale(0.9);
+      animation: popIn 0.6s forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.6);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   </style>
 </head>
 <body>
+
+  <h1>Prolog автомобили с различни правила и GIF</h1>
 
   <textarea id="prolog-input">
 % Примери на заявки:
@@ -108,6 +165,9 @@ car(riviera).
 car(ford_truck).
 car(ram).
 car(volvo_truck).
+car(nissan_leaf).
+car(bmw_i3).
+car(ford_mustang_mach_e).
 
 % Категории
 suv(jeep).
@@ -180,24 +240,46 @@ is_truck(X) :- truck(X).
     };
 
     function runProlog() {
-      const input = document.getElementById("prolog-input").value;
+      const input = document.getElementById("prolog-input").value.trim();
       const resultDiv = document.getElementById("result");
       const animDiv = document.getElementById("animal-animation");
+
+      resultDiv.style.opacity = 0;
+      animDiv.style.opacity = 0;
 
       resultDiv.innerHTML = "";
       animDiv.innerHTML = "";
 
+      if(!input) {
+        resultDiv.innerHTML = "<p>Моля, въведете заявка.</p>";
+        resultDiv.style.opacity = 1;
+        return;
+      }
+
       session.query(input);
+
+      let answersShown = 0;
+
       session.answers(answer => {
         if(answer === false) {
-          resultDiv.innerHTML += `<p>Няма повече резултати.</p>`;
+          if(answersShown === 0) {
+            resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
+          }
+          resultDiv.style.opacity = 1;
+          animDiv.style.opacity = 1;
           return;
         }
+
         const str = pl.format_answer(answer);
         if (str === "false.") {
-          resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
+          if(answersShown === 0) {
+            resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
+            resultDiv.style.opacity = 1;
+            animDiv.style.opacity = 1;
+          }
           return;
         }
+
         resultDiv.innerHTML += `<p>${str}</p>`;
 
         const match = str.match(/X = (\w+)/);
@@ -209,6 +291,9 @@ is_truck(X) :- truck(X).
             animDiv.innerHTML = "<p>Няма GIF за този автомобил.</p>";
           }
         }
+        answersShown++;
+        resultDiv.style.opacity = 1;
+        animDiv.style.opacity = 1;
       });
     }
   </script>
