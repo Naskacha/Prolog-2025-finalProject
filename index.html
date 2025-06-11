@@ -39,9 +39,25 @@
 <script>
 // Обект с GIF анимации по марка
 const animalAnimations = {
-  bmw: '<img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjk2cTdhZDR2cHlrbjRqY2Vwa3h0Y2dneGRhdzZhbmk2NTdnbWZsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yEWNsqrj8K7acGcCeo/giphy.gif" class="animal-gif" alt="BMW анимация" />',
-  ferrari: '<img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjd1cDQ1bndmNHdwNzBuaDE0MmhlMm02bXNlOG4wMDc4ZGlqbmRjeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TeXVQ0AFBukqA/giphy.gif" class="animal-gif" alt="Ferrari анимация" />',
-  tesla: '<img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2hrNjdybG0zbDRucnhtbm13ZHI1ZmgzNjFkNjM0ZjBscW91aWw4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7Jd3pq6Su0fh0/giphy.gif" class="animal-gif" alt="Tesla анимация" />'
+ bmw: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjk2cTdhZDR2cHlrbjRqY2Vwa3h0Y2dneGRhdzZhbmk2NTdnbWZsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yEWNsqrj8K7acGcCeo/giphy.gif',
+  ferrari: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjd1cDQ1bndmNHdwNzBuaDE0MmhlMm02bXNlOG4wMDc4ZGlqbmRjeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TeXVQ0AFBukqA/giphy.gif',
+  tesla: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGJoN2oyYTMzaHkxYjE1Mm9tbXhpdG8wcW12MjlzYnAzMnVyank1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/S7jznj1TlqH9otxZux/giphy.gif',
+  jeep: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnhtZnNlaW0xcHltdWpubDlwcm04Z3R1czlmZGl1OWgwcmIzN2xrbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SW13gyukVWLiE/giphy.gif',
+  volkswagen: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTI4MmN5YjNqMXY5NzhxbXRva3gzMHJjcWo1dW9yMzYxODJzNWczdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26n6SJHSx9bf22eGI/giphy.gif',
+  ford: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXNpejQzMG84eTJzbTZyZmpybGQ4MmVueWF3OGt4cHVwYTg2ZHlhNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eeh40u2H9vRQevZQ0y/giphy.gif',
+  chevrolet: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXU2bnVyeWdveTF1Zm1zcndnbWV4bnVxZjY5bzZ0bTN3OHBlc2IzZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8HHIvBCrQRlTy/giphy.gif',
+  cadillac: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGQ1azdldGdrbzNqdTBldjM1aDMweWNibDFuY3R3cDJwMzF4cHlmbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5ZYsXafZbfYVr45loC/giphy.gif',
+  honda: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWRiNnd2ZnZjOTl1a2NwNzA3YXNpa2kzdjlwZGwxbWswNHVqeWoxZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ck0ZqwDvDh2z2o6IOM/giphy.gif',
+  mercedes: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDd2aGxhdmI2cnNoZ2J2Y2c0bTYwZXk4NnVtcXhoamx4aTg5YzFkdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/J6VkFoc92mTEA/giphy.gif',
+  porsche: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXJzb2lrMjl1ZnlnbXF1Nnc0M3NlaTNybGY3dmRwbW5vODV6em5kdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Vfhj19PusenfO/giphy.gif',
+  dodge: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2hyNHJsZmdobHJ4NGs3c2E0MmI4cXY3ZXd2YXc4azh4NmVuNzk3eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7MMIo7lHCu51z99JFc/giphy.gif',
+  landrover: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRjMGRoOWwxczZuenFveXdtZHhpbzc3YTZkOWs5eHIyYXEwYXNvMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fT1oogkfC9hZ79XGuV/giphy.gif',
+  camaro: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXBxNmFzdWd5dG80ZXVuYW84amhwcG5iYWd5dnh6ZmF4dG4yamdzcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8HHIvBCrQRlTy/giphy.gif',
+  fiat: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzNjanN3Y2xyc3owNWd3Y2E1bXN1dGRrNWtsdm1vMzBma3Y0ajZ2aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lOsO9ShuJSPmUyen6J/giphy.gif',
+  oldsmobile: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXEwOXdhZmlrN2dmM2owaHRzMnN6c25iZnNnYnFhaDkyN29scW92cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/42xJjtDQ6xif4PHw2W/giphy.gif',
+  riviera: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWtpeGpwb2w0cHg1bzBhdGttN2treHphbWVhNm41bDRwdzk5ZWdybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cPJVEcwfJm42GdPtvs/giphy.gif',
+  ford_truck: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcm54ZHJ3Y3l1aXBkcW03bjA5OHJlaHY3dnk4OHh4Y3g4ZTE5bGN3cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/V8qIP5XoPPmZa/giphy.gif',
+  ram: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VodWhndXdpcjI0ZnpnM2NoNWxlMm9qczFvdWh0MDVscGhmNTEwOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZH1roGqXILBXi/giphy.gif',
 };
 
 // Функция за показване на анимация според резултата от Prolog
