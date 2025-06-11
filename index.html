@@ -104,6 +104,25 @@
       transform: scale(0.9);
       animation: popIn 0.6s forwards;
     }
+    #all-car-images {
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    #all-car-images img {
+      width: 120px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      user-select: none;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    #all-car-images img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(53, 122, 189, 0.6);
+    }
     @keyframes fadeIn {
       to {
         opacity: 1;
@@ -138,6 +157,9 @@ is_truck(X).
 
   <div id="result"></div>
   <div class="animal-container" id="animal-animation"></div>
+
+  <!-- Тук ще се показват всички снимки на коли -->
+  <div id="all-car-images"></div>
 
   <script src="https://unpkg.com/tau-prolog"></script>
   <script>
@@ -222,81 +244,120 @@ is_truck(X) :- truck(X).
       ford: '<img src="https://media.giphy.com/media/l0MYB8Ory7Hqefo9a/giphy.gif" class="animal-gif" alt="Ford анимация" />',
       chevrolet: '<img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" class="animal-gif" alt="Chevrolet анимация" />',
       cadillac: '<img src="https://media.giphy.com/media/5xk0vdH6Ue7Vu/giphy.gif" class="animal-gif" alt="Cadillac анимация" />',
-      honda: '<img src="https://media.giphy.com/media/26BRzozg4TCBXv6QU/giphy.gif" class="animal-gif" alt="Honda анимация" />',
-      mercedes: '<img src="https://media.giphy.com/media/l0MYR22WswSQeHTmo/giphy.gif" class="animal-gif" alt="Mercedes анимация" />',
-      porsche: '<img src="https://media.giphy.com/media/xUOxf48DpuN0DDKKXm/giphy.gif" class="animal-gif" alt="Porsche анимация" />',
-      dodge: '<img src="https://media.giphy.com/media/3o7aD9JbUeyQtjMQcE/giphy.gif" class="animal-gif" alt="Dodge анимация" />',
-      landrover: '<img src="https://media.giphy.com/media/l3vR6HFSuGNNikVfy/giphy.gif" class="animal-gif" alt="Land Rover анимация" />',
-      camaro: '<img src="https://media.giphy.com/media/l0MYt5QXxApRoMG7S/giphy.gif" class="animal-gif" alt="Camaro анимация" />',
-      fiat: '<img src="https://media.giphy.com/media/l0MYt5V6GlvYh8E2Q/giphy.gif" class="animal-gif" alt="Fiat анимация" />',
-      oldsmobile: '<img src="https://media.giphy.com/media/l0MYt5Y9iWguIfWqU/giphy.gif" class="animal-gif" alt="Oldsmobile анимация" />',
-      riviera: '<img src="https://media.giphy.com/media/l0MYt5gHCVZbWNVdK/giphy.gif" class="animal-gif" alt="Riviera анимация" />',
-      ford_truck: '<img src="https://media.giphy.com/media/3ohs4hx33pMjZwKjRS/giphy.gif" class="animal-gif" alt="Ford Truck анимация" />',
-      ram: '<img src="https://media.giphy.com/media/3o7aD1RW9Wn5NOXyRK/giphy.gif" class="animal-gif" alt="Ram Truck анимация" />',
-      volvo_truck: '<img src="https://media.giphy.com/media/3o7aDbZoxOyThxnyqo/giphy.gif" class="animal-gif" alt="Volvo Truck анимация" />',
-      nissan_leaf: '<img src="https://media.giphy.com/media/l0MYFCsxv1iyVRAk4/giphy.gif" class="animal-gif" alt="Nissan Leaf анимация" />',
-      bmw_i3: '<img src="https://media.giphy.com/media/l0MYJEFaO4zW0FVyU/giphy.gif" class="animal-gif" alt="BMW i3 анимация" />',
-      ford_mustang_mach_e: '<img src="https://media.giphy.com/media/l0MYEKMwYSPYxv4KI/giphy.gif" class="animal-gif" alt="Ford Mustang Mach-E анимация" />'
+      honda: '<img src="https://media.giphy.com/media/RFQx7RUYSJRDG/giphy.gif" class="animal-gif" alt="Honda анимация" />',
+      mercedes: '<img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" class="animal-gif" alt="Mercedes анимация" />',
+      porsche: '<img src="https://media.giphy.com/media/xUOwGfwYQa5DcZMRH6/giphy.gif" class="animal-gif" alt="Porsche анимация" />',
+      dodge: '<img src="https://media.giphy.com/media/l41Yqz12U8zQ8i4NO/giphy.gif" class="animal-gif" alt="Dodge анимация" />',
+      landrover: '<img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" class="animal-gif" alt="Land Rover анимация" />',
+      camaro: '<img src="https://media.giphy.com/media/3o7aD6Z8mYmPjx6RGS/giphy.gif" class="animal-gif" alt="Camaro анимация" />',
+      fiat: '<img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" class="animal-gif" alt="Fiat анимация" />',
+      oldsmobile: '<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" class="animal-gif" alt="Oldsmobile анимация" />',
+      riviera: '<img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" class="animal-gif" alt="Riviera анимация" />',
+      ford_truck: '<img src="https://media.giphy.com/media/3o7aD6Z8mYmPjx6RGS/giphy.gif" class="animal-gif" alt="Ford Truck анимация" />',
+      ram: '<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" class="animal-gif" alt="Ram анимация" />',
+      volvo_truck: '<img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" class="animal-gif" alt="Volvo Truck анимация" />',
+      nissan_leaf: '<img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" class="animal-gif" alt="Nissan Leaf анимация" />',
+      bmw_i3: '<img src="https://media.giphy.com/media/kG0HfwOjQk1FK/giphy.gif" class="animal-gif" alt="BMW i3 анимация" />',
+      ford_mustang_mach_e: '<img src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif" class="animal-gif" alt="Ford Mustang Mach-E анимация" />'
     };
+
+    const allCarImages = {
+      toyota: "https://upload.wikimedia.org/wikipedia/commons/9/99/Toyota_Logo.svg",
+      bmw: "https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg",
+      ferrari: "https://upload.wikimedia.org/wikipedia/en/0/03/Ferrari-Logo.svg",
+      tesla: "https://upload.wikimedia.org/wikipedia/commons/b/bb/Tesla_T_symbol.svg",
+      jeep: "https://upload.wikimedia.org/wikipedia/commons/7/77/Jeep_logo.svg",
+      volkswagen: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Volkswagen_logo_2019.svg",
+      ford: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Ford_logo_flat.svg",
+      chevrolet: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Chevrolet_logo.svg",
+      cadillac: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Cadillac_logo.svg",
+      honda: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Honda_logo.svg",
+      mercedes: "https://upload.wikimedia.org/wikipedia/commons/9/90/Mercedes-Logo.svg",
+      porsche: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Porsche_logo.svg",
+      dodge: "https://upload.wikimedia.org/wikipedia/commons/6/64/Dodge_logo.svg",
+      landrover: "https://upload.wikimedia.org/wikipedia/en/8/8f/Land_Rover_logo.png",
+      camaro: "https://upload.wikimedia.org/wikipedia/commons/5/5c/2017_Chevrolet_Camaro_SS_6.2_Front.jpg",
+      fiat: "https://upload.wikimedia.org/wikipedia/commons/1/19/Fiat_logo_2020.svg",
+      oldsmobile: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Oldsmobile_logo_1992-1994.svg",
+      riviera: "https://upload.wikimedia.org/wikipedia/commons/4/44/1970_Buick_Riviera_front_6-19-14.jpg",
+      ford_truck: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Ford_F-Series_truck_2018.jpg",
+      ram: "https://upload.wikimedia.org/wikipedia/commons/7/7a/RAM_logo.svg",
+      volvo_truck: "https://upload.wikimedia.org/wikipedia/commons/9/92/Volvo_Truck_Logo.svg",
+      nissan_leaf: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Nissan_Leaf_2018_IMG_0850.jpg",
+      bmw_i3: "https://upload.wikimedia.org/wikipedia/commons/4/48/BMW_i3_IAA_2013_IMG_1645.JPG",
+      ford_mustang_mach_e: "https://upload.wikimedia.org/wikipedia/commons/0/01/Ford_Mustang_Mach-E_2021_IMG_0265.jpg"
+    };
+
+    function showAllCarImages() {
+      const container = document.getElementById("all-car-images");
+      container.innerHTML = "";
+      for (const car in allCarImages) {
+        const img = document.createElement("img");
+        img.src = allCarImages[car];
+        img.alt = car;
+        img.title = car.replace(/_/g, " ");
+        container.appendChild(img);
+      }
+    }
 
     function runProlog() {
       const input = document.getElementById("prolog-input").value.trim();
-      const resultDiv = document.getElementById("result");
-      const animDiv = document.getElementById("animal-animation");
 
-      resultDiv.style.opacity = 0;
-      animDiv.style.opacity = 0;
-
-      resultDiv.innerHTML = "";
-      animDiv.innerHTML = "";
-
-      if(!input) {
-        resultDiv.innerHTML = "<p>Моля, въведете заявка.</p>";
-        resultDiv.style.opacity = 1;
+      if (!input) {
+        alert("Моля, въведете заявка на Prolog.");
         return;
       }
 
-      session.query(input);
+      const query = input.endsWith('.') ? input : input + '.';
 
-      let answersShown = 0;
+      session.query(query);
 
-      session.answers(answer => {
-        if(answer === false) {
-          if(answersShown === 0) {
-            resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
-          }
-          resultDiv.style.opacity = 1;
-          animDiv.style.opacity = 1;
-          return;
-        }
+      let answers = [];
+      let resultText = "";
 
-        const str = pl.format_answer(answer);
-        if (str === "false.") {
-          if(answersShown === 0) {
-            resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
-            resultDiv.style.opacity = 1;
-            animDiv.style.opacity = 1;
-          }
-          return;
-        }
-
-        resultDiv.innerHTML += `<p>${str}</p>`;
-
-        const match = str.match(/X = (\w+)/);
-        if (match) {
-          const car = match[1];
-          if (animalAnimations[car]) {
-            animDiv.innerHTML = animalAnimations[car];
+      session.answers(x => {
+        if (x === false) {
+          // Край на отговорите
+          if (answers.length === 0) {
+            resultText = "Няма намерени резултати.";
+            document.getElementById("animal-animation").innerHTML = "";
           } else {
-            animDiv.innerHTML = "<p>Няма GIF за този автомобил.</p>";
+            resultText = "Намерени резултати: " + answers.join(", ");
+            showCarAnimation(answers[0]); // Показваме първата кола от резултатите с анимация
+          }
+          document.getElementById("result").textContent = resultText;
+          document.getElementById("result").style.opacity = 1;
+        } else {
+          if (x.links) {
+            // Взимаме стойността на променливата (примерно X)
+            for (const key in x.links) {
+              if (key === 'X') {
+                const val = x.links[key].id;
+                if (!answers.includes(val)) {
+                  answers.push(val);
+                }
+              }
+            }
           }
         }
-        answersShown++;
-        resultDiv.style.opacity = 1;
-        animDiv.style.opacity = 1;
       });
     }
-  </script>
 
+    function showCarAnimation(car) {
+      const container = document.getElementById("animal-animation");
+      if (animalAnimations[car]) {
+        container.innerHTML = animalAnimations[car];
+        container.style.opacity = 1;
+      } else {
+        container.innerHTML = "";
+        container.style.opacity = 0;
+      }
+    }
+
+    // Показваме всички снимки веднага щом се зареди страницата
+    window.onload = () => {
+      showAllCarImages();
+    };
+  </script>
 </body>
 </html>
