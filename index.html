@@ -1,87 +1,302 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Car Animation with Prolog Result</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background: #f9f9f9;
-  }
-  #animationContainer {
-    margin-top: 20px;
-  }
-  .animal-gif {
-    max-width: 300px;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  button {
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prolog автомобили с различни правила и GIF</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      color: #222;
+      padding: 25px 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      user-select: none;
+    }
+    h1 {
+      text-align: center;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1rem;
+      letter-spacing: 1.2px;
+      text-shadow: 0 1px 3px rgba(255 255 255 / 0.8);
+    }
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      padding: 15px 20px;
+      border-radius: 12px;
+      border: 2px solid #4a90e2;
+      box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+      resize: vertical;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fefefe;
+      color: #222;
+      outline: none;
+    }
+    textarea:focus {
+      border-color: #357abd;
+      box-shadow: 0 6px 20px rgba(53, 122, 189, 0.6);
+    }
+    button {
+      display: block;
+      margin: 25px auto 0;
+      padding: 14px 36px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(45deg, #4a90e2, #357abd);
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(53, 122, 189, 0.6);
+      transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+      user-select: none;
+    }
+    button:hover {
+      background: linear-gradient(45deg, #357abd, #285a8d);
+      box-shadow: 0 8px 25px rgba(40, 90, 141, 0.8);
+      transform: scale(1.05);
+    }
+    button:active {
+      transform: scale(0.98);
+      box-shadow: 0 4px 12px rgba(40, 90, 141, 0.5);
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 18px;
+      min-height: 40px;
+      font-weight: 600;
+      color: #1a3c6e;
+      line-height: 1.5;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 0.8s forwards;
+      user-select: text;
+    }
+    .animal-container {
+      margin-top: 40px;
+      min-height: 180px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffffcc;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(74, 144, 226, 0.25);
+      transition: background-color 0.5s ease;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    .animal-gif {
+      max-width: 200px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(53, 122, 189, 0.5);
+      transform: scale(0.9);
+      animation: popIn 0.6s forwards;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.6);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
 </head>
 <body>
 
-<h1>Избор на кола (симулация с Prolog резултат)</h1>
+  <h1>Prolog автомобили с различни правила и GIF</h1>
 
-<!-- Бутон за симулация на получаване на резултат от Prolog -->
-<button onclick="simulatePrologResult()">Покажи анимация</button>
+  <textarea id="prolog-input">
+% Примери на заявки:
+is_suv(X).
+is_luxury(X).
+is_sports_car(X).
+is_electric(X).
+is_classic(X).
+is_truck(X).
+  </textarea><br />
+  <button onclick="runProlog()">Изпълни</button>
 
-<!-- Контейнер за анимацията -->
-<div id="animationContainer"></div>
+  <div id="result"></div>
+  <div class="animal-container" id="animal-animation"></div>
 
-<script>
-// Обект с GIF анимации по марка
-const animalAnimations = {
- bmw: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjk2cTdhZDR2cHlrbjRqY2Vwa3h0Y2dneGRhdzZhbmk2NTdnbWZsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yEWNsqrj8K7acGcCeo/giphy.gif',
-  ferrari: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjd1cDQ1bndmNHdwNzBuaDE0MmhlMm02bXNlOG4wMDc4ZGlqbmRjeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TeXVQ0AFBukqA/giphy.gif',
-  tesla: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGJoN2oyYTMzaHkxYjE1Mm9tbXhpdG8wcW12MjlzYnAzMnVyank1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/S7jznj1TlqH9otxZux/giphy.gif',
-  jeep: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnhtZnNlaW0xcHltdWpubDlwcm04Z3R1czlmZGl1OWgwcmIzN2xrbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/SW13gyukVWLiE/giphy.gif',
-  volkswagen: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTI4MmN5YjNqMXY5NzhxbXRva3gzMHJjcWo1dW9yMzYxODJzNWczdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26n6SJHSx9bf22eGI/giphy.gif',
-  ford: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXNpejQzMG84eTJzbTZyZmpybGQ4MmVueWF3OGt4cHVwYTg2ZHlhNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eeh40u2H9vRQevZQ0y/giphy.gif',
-  chevrolet: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXU2bnVyeWdveTF1Zm1zcndnbWV4bnVxZjY5bzZ0bTN3OHBlc2IzZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8HHIvBCrQRlTy/giphy.gif',
-  cadillac: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGQ1azdldGdrbzNqdTBldjM1aDMweWNibDFuY3R3cDJwMzF4cHlmbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5ZYsXafZbfYVr45loC/giphy.gif',
-  honda: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWRiNnd2ZnZjOTl1a2NwNzA3YXNpa2kzdjlwZGwxbWswNHVqeWoxZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ck0ZqwDvDh2z2o6IOM/giphy.gif',
-  mercedes: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDd2aGxhdmI2cnNoZ2J2Y2c0bTYwZXk4NnVtcXhoamx4aTg5YzFkdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/J6VkFoc92mTEA/giphy.gif',
-  porsche: 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXJzb2lrMjl1ZnlnbXF1Nnc0M3NlaTNybGY3dmRwbW5vODV6em5kdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Vfhj19PusenfO/giphy.gif',
-  dodge: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2hyNHJsZmdobHJ4NGs3c2E0MmI4cXY3ZXd2YXc4azh4NmVuNzk3eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/7MMIo7lHCu51z99JFc/giphy.gif',
-  landrover: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWRjMGRoOWwxczZuenFveXdtZHhpbzc3YTZkOWs5eHIyYXEwYXNvMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fT1oogkfC9hZ79XGuV/giphy.gif',
-  camaro: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXBxNmFzdWd5dG80ZXVuYW84amhwcG5iYWd5dnh6ZmF4dG4yamdzcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8HHIvBCrQRlTy/giphy.gif',
-  fiat: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzNjanN3Y2xyc3owNWd3Y2E1bXN1dGRrNWtsdm1vMzBma3Y0ajZ2aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lOsO9ShuJSPmUyen6J/giphy.gif',
-  oldsmobile: 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXEwOXdhZmlrN2dmM2owaHRzMnN6c25iZnNnYnFhaDkyN29scW92cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/42xJjtDQ6xif4PHw2W/giphy.gif',
-  riviera: 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWtpeGpwb2w0cHg1bzBhdGttN2treHphbWVhNm41bDRwdzk5ZWdybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cPJVEcwfJm42GdPtvs/giphy.gif',
-  ford_truck: 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcm54ZHJ3Y3l1aXBkcW03bjA5OHJlaHY3dnk4OHh4Y3g4ZTE5bGN3cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/V8qIP5XoPPmZa/giphy.gif',
-  ram: 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VodWhndXdpcjI0ZnpnM2NoNWxlMm9qczFvdWh0MDVscGhmNTEwOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZH1roGqXILBXi/giphy.gif',
-};
+  <script src="https://unpkg.com/tau-prolog"></script>
+  <script>
+    const session = pl.create();
 
-// Функция за показване на анимация според резултата от Prolog
-function showAnimation(carBrand) {
-  const container = document.getElementById('animationContainer');
-  
-  if (animalAnimations[carBrand]) {
-    container.innerHTML = animalAnimations[carBrand];
-  } else {
-    container.innerHTML = `<p>Няма анимация за марката: <strong>${carBrand}</strong></p>`;
-  }
-}
+    const knowledge = 
+      car(toyota).
+car(bmw).
+car(ferrari).
+car(tesla).
+car(jeep).
+car(volkswagen).
+car(ford).
+car(chevrolet).
+car(cadillac).
+car(honda).
+car(mercedes).
+car(porsche).
+car(dodge).
+car(landrover).
+car(camaro).
+car(fiat).
+car(oldsmobile).
+car(riviera).
+car(ford_truck).
+car(ram).
+car(volvo_truck).
+car(nissan_leaf).
+car(bmw_i3).
+car(ford_mustang_mach_e).
 
-// Симулация на получаване на резултат от Prolog (тук можеш да я замениш с реален код)
-function simulatePrologResult() {
-  // Пример: симулираме, че Prolog ни връща марка автомобил
-  // Можеш да промениш стойността на "carFromProlog"
-  const carFromProlog = prompt("Въведи марка кола (bmw, ferrari, tesla):", "bmw");
+% Категории
+suv(jeep).
+suv(landrover).
+suv(toyota).
+suv(volkswagen).
 
-  if (carFromProlog) {
-    showAnimation(carFromProlog.toLowerCase().trim());
-  }
-}
-</script>
+luxury(bmw).
+luxury(tesla).
+luxury(cadillac).
+luxury(mercedes).
+luxury(porsche).
+luxury(riviera).
+
+sports_car(ferrari).
+sports_car(bmw).
+sports_car(porsche).
+sports_car(camaro).
+sports_car(dodge).
+
+electric(tesla).
+electric(nissan_leaf).
+electric(bmw_i3).
+electric(ford_mustang_mach_e).
+
+classic(oldsmobile).
+classic(fiat).
+classic(riviera).
+
+truck(ford_truck).
+truck(ram).
+truck(volvo_truck).
+
+% Правила
+is_suv(X) :- suv(X).
+is_luxury(X) :- luxury(X).
+is_sports_car(X) :- sports_car(X).
+is_electric(X) :- electric(X).
+is_classic(X) :- classic(X).
+is_truck(X) :- truck(X).
+    ;
+
+    session.consult(knowledge);
+
+    const animalAnimations = {
+      toyota: '<img src="https://media.giphy.com/media/QbEgxvVUQizk6/giphy.gif" class="animal-gif" alt="Toyota анимация" />',
+      bmw: '<img src="https://media.giphy.com/media/kG0HfwOjQk1FK/giphy.gif" class="animal-gif" alt="BMW анимация" />',
+      ferrari: '<img src="https://media.giphy.com/media/c7g8b8UvuzLeA/giphy.gif" class="animal-gif" alt="Ferrari анимация" />',
+      tesla: '<img src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif" class="animal-gif" alt="Tesla анимация" />',
+      jeep: '<img src="https://media.giphy.com/media/3oEjHP8ELRNNlnlLGM/giphy.gif" class="animal-gif" alt="Jeep анимация" />',
+      volkswagen: '<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" class="animal-gif" alt="Volkswagen анимация" />',
+      ford: '<img src="https://media.giphy.com/media/l0MYB8Ory7Hqefo9a/giphy.gif" class="animal-gif" alt="Ford анимация" />',
+      chevrolet: '<img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" class="animal-gif" alt="Chevrolet анимация" />',
+      cadillac: '<img src="https://media.giphy.com/media/5xk0vdH6Ue7Vu/giphy.gif" class="animal-gif" alt="Cadillac анимация" />',
+      honda: '<img src="https://media.giphy.com/media/26BRzozg4TCBXv6QU/giphy.gif" class="animal-gif" alt="Honda анимация" />',
+      mercedes: '<img src="https://media.giphy.com/media/l0MYR22WswSQeHTmo/giphy.gif" class="animal-gif" alt="Mercedes анимация" />',
+      porsche: '<img src="https://media.giphy.com/media/xUOxf48DpuN0DDKKXm/giphy.gif" class="animal-gif" alt="Porsche анимация" />',
+      dodge: '<img src="https://media.giphy.com/media/3o7aD9JbUeyQtjMQcE/giphy.gif" class="animal-gif" alt="Dodge анимация" />',
+      landrover: '<img src="https://media.giphy.com/media/l3vR6HFSuGNNikVfy/giphy.gif" class="animal-gif" alt="Land Rover анимация" />',
+      camaro: '<img src="https://media.giphy.com/media/l0MYt5QXxApRoMG7S/giphy.gif" class="animal-gif" alt="Camaro анимация" />',
+      fiat: '<img src="https://media.giphy.com/media/l0MYt5V6GlvYh8E2Q/giphy.gif" class="animal-gif" alt="Fiat анимация" />',
+      oldsmobile: '<img src="https://media.giphy.com/media/l0MYt5Y9iWguIfWqU/giphy.gif" class="animal-gif" alt="Oldsmobile анимация" />',
+      riviera: '<img src="https://media.giphy.com/media/l0MYt5gHCVZbWNVdK/giphy.gif" class="animal-gif" alt="Riviera анимация" />',
+      ford_truck: '<img src="https://media.giphy.com/media/3ohs4hx33pMjZwKjRS/giphy.gif" class="animal-gif" alt="Ford Truck анимация" />',
+      ram: '<img src="https://media.giphy.com/media/3o7aD1RW9Wn5NOXyRK/giphy.gif" class="animal-gif" alt="Ram Truck анимация" />',
+      volvo_truck: '<img src="https://media.giphy.com/media/3o7aDbZoxOyThxnyqo/giphy.gif" class="animal-gif" alt="Volvo Truck анимация" />',
+      nissan_leaf: '<img src="https://media.giphy.com/media/l0MYFCsxv1iyVRAk4/giphy.gif" class="animal-gif" alt="Nissan Leaf анимация" />',
+      bmw_i3: '<img src="https://media.giphy.com/media/l0MYJEFaO4zW0FVyU/giphy.gif" class="animal-gif" alt="BMW i3 анимация" />',
+      ford_mustang_mach_e: '<img src="https://media.giphy.com/media/l0MYEKMwYSPYxv4KI/giphy.gif" class="animal-gif" alt="Ford Mustang Mach-E анимация" />'
+    };
+
+    function runProlog() {
+      const input = document.getElementById("prolog-input").value.trim();
+      const resultDiv = document.getElementById("result");
+      const animDiv = document.getElementById("animal-animation");
+
+      resultDiv.style.opacity = 0;
+      animDiv.style.opacity = 0;
+
+      resultDiv.innerHTML = "";
+      animDiv.innerHTML = "";
+
+      if(!input) {
+        resultDiv.innerHTML = "<p>Моля, въведете заявка.</p>";
+        resultDiv.style.opacity = 1;
+        return;
+      }
+
+      session.query(input);
+
+      let answersShown = 0;
+
+      session.answers(answer => {
+        if(answer === false) {
+          if(answersShown === 0) {
+            resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
+          }
+          resultDiv.style.opacity = 1;
+          animDiv.style.opacity = 1;
+          return;
+        }
+
+        const str = pl.format_answer(answer);
+        if (str === "false.") {
+          if(answersShown === 0) {
+            resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
+            resultDiv.style.opacity = 1;
+            animDiv.style.opacity = 1;
+          }
+          return;
+        }
+
+        resultDiv.innerHTML += <p>${str}</p>;
+
+        const match = str.match(/X = (\w+)/);
+        if (match) {
+          const car = match[1];
+          if (animalAnimations[car]) {
+            animDiv.innerHTML = animalAnimations[car];
+          } else {
+            animDiv.innerHTML = "<p>Няма GIF за този автомобил.</p>";
+          }
+        }
+        answersShown++;
+        resultDiv.style.opacity = 1;
+        animDiv.style.opacity = 1;
+      });
+    }
+  </script>
 
 </body>
 </html>
