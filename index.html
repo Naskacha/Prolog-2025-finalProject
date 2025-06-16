@@ -48,16 +48,20 @@
       min-height: 30px;
       font-weight: bold;
       color: #004a99;
+      white-space: pre-wrap;
+      text-align: left;
     }
     .car-container {
       margin-top: 30px;
-      min-height: 160px;
+      min-height: 180px;
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
+      gap: 15px;
       background: #d0e8ff;
       border-radius: 12px;
       box-shadow: 0 0 10px #a0c4ff;
+      padding: 15px;
     }
     .car-gif {
       max-width: 180px;
@@ -85,34 +89,29 @@ is_suv(X).
   <script>
     const session = pl.create();
 
-    // Разширена база знания с коли и правила
+    // База знания с коли и правила
     const knowledge = `
-      car(tesla_model_s).
-      car(bmw_x5).
-      car(audi_a4).
-      car(toyota_prius).
-      car(jeep_wrangler).
-      car(ford_mustang).
-      car(honda_civic).
+      car(tesla).
+      car(bmw).
+      car(audi).
+      car(toyota).
+      car(jeep).
+      car(ford).
+      car(honda).
 
-      % Електрически коли
-      electric(tesla_model_s).
-      electric(toyota_prius).
+      electric(tesla).
+      electric(toyota).
 
-      % Седан
-      sedan(tesla_model_s).
-      sedan(audi_a4).
-      sedan(toyota_prius).
-      sedan(honda_civic).
+      sedan(tesla).
+      sedan(audi).
+      sedan(toyota).
+      sedan(honda).
 
-      % SUV
-      suv(bmw_x5).
-      suv(jeep_wrangler).
+      suv(bmw).
+      suv(jeep).
 
-      % Спортни коли
-      sports(ford_mustang).
+      sports(ford).
 
-      % Правила
       is_electric(X) :- electric(X).
       is_sedan(X) :- sedan(X).
       is_suv(X) :- suv(X).
@@ -122,13 +121,13 @@ is_suv(X).
     session.consult(knowledge);
 
     const carAnimations = {
-      tesla_model_s: '<img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" class="car-gif" alt="Tesla Model S" />',
-      bmw_x5: '<img src="https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif" class="car-gif" alt="BMW X5" />',
-      audi_a4: '<img src="https://media.giphy.com/media/3o6Zt8MgUuvSbkZYWc/giphy.gif" class="car-gif" alt="Audi A4" />',
-      toyota_prius: '<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" class="car-gif" alt="Toyota Prius" />',
-      jeep_wrangler: '<img src="https://media.giphy.com/media/xUOxf48t7xZ5I8Z7yQ/giphy.gif" class="car-gif" alt="Jeep Wrangler" />',
-      ford_mustang: '<img src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif" class="car-gif" alt="Ford Mustang" />',
-      honda_civic: '<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" class="car-gif" alt="Honda Civic" />'
+      tesla: '<img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExODNkMHZtOG8wZmEzb3dzajZuengxeDgzNzVtN2x3OGI4bXJtMGlkNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/S7jznj1TlqH9otxZux/giphy.gif" class="car-gif" alt="Tesla" />',
+      bmw: '<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmdqdWZ0cnN2cWVxcnpyNWR1eHN5OWFvZXg1YWNhZGdpdXBkN2c1MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/f6R3ijvEeshaUd3cAQ/giphy.gif" class="car-gif" alt="BMW" />',
+      audi: '<img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcG5venNweGRhaHRwZzVsdmgyZHlseXZpM2Yyc216NGU1NXM0djBvcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l46CwlES1UnwgqsaQ/giphy.gif" class="car-gif" alt="Audi" />',
+      toyota: '<img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnFvOGY4dmZiNWg4bXBjcGd1dXZ6cHp0NjI4M2plenJ3dTB3eG02OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FoVBIIrLYR5Je/giphy.gif" class="car-gif" alt="Toyota" />',
+      jeep: '<img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXNjZTNxZWpuYTZsZmplbmZrZDd0aWhzeHU4eTB1a3d0YXY0YWhuciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JPljdNlISaycqvFiNn/giphy.gif" class="car-gif" alt="Jeep" />',
+      ford: '<img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGZtdWo5NzBvOGF0MWs5bjJseG9tZ3M5cHlpOXRsbzJwY2tvNnhkbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eeh40u2H9vRQevZQ0y/giphy.gif" class="car-gif" alt="Ford" />',
+      honda: '<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3R5MTBtc3JzdzVvcW91cW5oenZjdjZ0Nm81N3FjcWdhcTM4MTA5aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/eUqHZFl0jxR5e/giphy.gif" class="car-gif" alt="Honda" />'
     };
 
     function runProlog() {
@@ -140,32 +139,34 @@ is_suv(X).
       animDiv.innerHTML = "";
 
       session.query(input);
+
+      let foundCars = new Set();
+
       session.answers(answer => {
-        if(answer === false) {
-          if(resultDiv.innerHTML === "") {
+        if (answer === false) {
+          if (foundCars.size === 0) {
             resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
           } else {
-            resultDiv.innerHTML += `<p>Няма повече резултати.</p>`;
+            resultDiv.innerHTML += `<p>Край на резултатите.</p>`;
+            // Покажи всички намерени коли с GIF
+            animDiv.innerHTML = Array.from(foundCars).map(car => carAnimations[car] || `<p>Няма GIF за ${car}.</p>`).join('');
           }
           return;
         }
+
         const str = pl.format_answer(answer);
         if (str === "false.") {
-          if(resultDiv.innerHTML === "") {
+          if (foundCars.size === 0) {
             resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
           }
           return;
         }
+
         resultDiv.innerHTML += `<p>${str}</p>`;
 
         const match = str.match(/X = (\w+)/);
         if (match) {
-          const car = match[1];
-          if (carAnimations[car]) {
-            animDiv.innerHTML = carAnimations[car];
-          } else {
-            animDiv.innerHTML = "<p>Няма GIF за тази кола.</p>";
-          }
+          foundCars.add(match[1]);
         }
       });
     }
