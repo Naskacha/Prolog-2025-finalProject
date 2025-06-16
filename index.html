@@ -3,113 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prolog коли с различни правила и GIF</title>
+  <title>Prolog Коли</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 700px;
-      margin: 30px auto;
-      background: #f9f9f9;
-      color: #333;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      border-radius: 10px;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(145deg, #d4e8ff, #ffffff);
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 100%;
       text-align: center;
     }
-    textarea {
-      width: 90%;
-      max-width: 600px;
-      height: 120px;
-      font-family: monospace;
-      font-size: 16px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: 2px solid #007acc;
-      padding: 8px;
-      resize: vertical;
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #007acc;
     }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      border: 2px solid #007acc;
+      border-radius: 12px;
+      padding: 10px;
+      font-size: 16px;
+      resize: vertical;
+      transition: 0.3s;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #005f99;
+    }
+
     button {
-      margin-top: 15px;
-      padding: 10px 25px;
+      margin-top: 20px;
+      padding: 12px 30px;
       font-size: 18px;
+      color: white;
       background-color: #007acc;
       border: none;
-      color: white;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 122, 204, 0.3);
     }
+
     button:hover {
       background-color: #005f99;
+      transform: scale(1.03);
     }
+
     #result {
-      margin-top: 20px;
-      font-size: 18px;
-      min-height: 30px;
-      font-weight: bold;
-      color: #004a99;
-      white-space: pre-wrap;
+      margin-top: 25px;
       text-align: left;
+      font-size: 16px;
+      color: #333;
+      background: #f2f9ff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
     }
+
     .car-container {
-      margin-top: 30px;
-      min-height: 180px;
+      margin-top: 25px;
       display: flex;
       flex-wrap: wrap;
+      gap: 20px;
       justify-content: center;
-      gap: 15px;
-      background: #d0e8ff;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #a0c4ff;
-      padding: 15px;
     }
+
     .car-gif {
-      max-width: 180px;
+      width: 180px;
       border-radius: 12px;
-      box-shadow: 0 0 10px #005f99;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+
+    .car-gif:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
 
-  <h1>Prolog коли с различни правила и GIF</h1>
+  <div class="container">
+    <h1>Prolog Коли с Правила и GIF</h1>
 
-  <textarea id="prolog-input">
+    <textarea id="prolog-input">
 % Примери на заявки:
 is_electric(X).
 is_sedan(X).
 is_suv(X).
-  </textarea><br />
-  <button onclick="runProlog()">Изпълни</button>
+    </textarea><br />
 
-  <div id="result"></div>
-  <div class="car-container" id="car-animation"></div>
+    <button onclick="runProlog()">Изпълни</button>
+
+    <div id="result"></div>
+    <div class="car-container" id="car-animation"></div>
+  </div>
 
   <script src="https://unpkg.com/tau-prolog"></script>
   <script>
     const session = pl.create();
 
-    // База знания с коли и правила
     const knowledge = `
-      car(tesla).
-      car(bmw).
-      car(audi).
-      car(toyota).
-      car(jeep).
-      car(ford).
-      car(honda).
-
-      electric(tesla).
-      electric(toyota).
-
-      sedan(tesla).
-      sedan(audi).
-      sedan(toyota).
-      sedan(honda).
-
-      suv(bmw).
-      suv(jeep).
-
+      car(tesla). car(bmw). car(audi). car(toyota). car(jeep). car(ford). car(honda).
+      electric(tesla). electric(toyota).
+      sedan(tesla). sedan(audi). sedan(toyota). sedan(honda).
+      suv(bmw). suv(jeep).
       sports(ford).
 
       is_electric(X) :- electric(X).
@@ -147,21 +161,15 @@ is_suv(X).
           if (foundCars.size === 0) {
             resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
           } else {
-            resultDiv.innerHTML += `<p>Край на резултатите.</p>`;
-            // Покажи всички намерени коли с GIF
-            animDiv.innerHTML = Array.from(foundCars).map(car => carAnimations[car] || `<p>Няма GIF за ${car}.</p>`).join('');
+            resultDiv.innerHTML += `<p><strong>Край на резултатите.</strong></p>`;
+            animDiv.innerHTML = Array.from(foundCars)
+              .map(car => carAnimations[car] || `<p>Няма GIF за ${car}.</p>`)
+              .join('');
           }
           return;
         }
 
         const str = pl.format_answer(answer);
-        if (str === "false.") {
-          if (foundCars.size === 0) {
-            resultDiv.innerHTML = "<p>Няма резултати за тази заявка.</p>";
-          }
-          return;
-        }
-
         resultDiv.innerHTML += `<p>${str}</p>`;
 
         const match = str.match(/X = (\w+)/);
